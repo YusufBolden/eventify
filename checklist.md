@@ -3,8 +3,8 @@
 ## 📦 Project Setup
 - [ ] Submit proposal and get approval
 - [ ] Create full project structure (backend/frontend)
-- [ ] Initialize Git repo and push to GitHub
-- [ ] Add .env.example files and .gitignore
+- [✅] Initialize Git repo and push to GitHub
+- [✅] Add .env.example files and .gitignore
 
 ## 🔐 Backend - Auth & Models
 - [ ] Setup Express server and MongoDB Atlas
