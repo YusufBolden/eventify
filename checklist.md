@@ -1,7 +1,7 @@
 # ✅ Eventify Capstone Project Checklist
 
 ## 📦 Project Setup
-- [ ] Submit proposal and get approval
+- [✅] Submit proposal and get approval
 - [ ] Create full project structure (backend/frontend)
 - [✅] Initialize Git repo and push to GitHub
 - [✅] Add .env.example files and .gitignore
