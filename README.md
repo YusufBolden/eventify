@@ -30,7 +30,7 @@ Built using a mobile-first and accessibility-first approach, Eventify ensures th
 ![ESLint](https://img.shields.io/badge/Linter-ESLint-4B32C3?style=flat-square&logo=eslint&logoColor=white)
 ![Prettier](https://img.shields.io/badge/Formatter-Prettier-F7B93E?style=flat-square&logo=prettier&logoColor=black)
 
-### 🧪 Testing & Debugging (Optional)
+### 🧪 Testing & Debugging
 ![Postman](https://img.shields.io/badge/API_Postman-FF6C37?style=flat-square&logo=postman&logoColor=white)
 
 ### ☁️ Deployment
