@@ -7,14 +7,14 @@
 - [✅] Add .env.example files and .gitignore
 
 ## 🔐 Backend - Auth & Models
-- [ ] Setup Express server and MongoDB Atlas
-- [ ] Create User model with bcrypt + JWT
-- [ ] Register/login routes with validation
-- [ ] Middleware for auth and ownership
-- [ ] Create Event model
-- [ ] Create Guest model
-- [ ] Event CRUD routes
-- [ ] Guest RSVP routes
+- [✅] Setup Express server and MongoDB Atlas
+- [✅] Create User model with bcrypt + JWT
+- [✅] Register/login routes with validation
+- [✅] Middleware for auth and ownership
+- [✅] Create Event model
+- [✅] Create Guest model
+- [✅] Event CRUD routes
+- [✅] Guest RSVP routes
 
 ## 🖥️ Frontend - UI & Logic (Mobile-First)
 - [ ] Scaffold Vite + Tailwind CSS app (mobile-first config)
