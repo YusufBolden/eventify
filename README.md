@@ -82,53 +82,46 @@ backend/
 ```
 frontend/
 ├── index.html
-├── vite.config.ts
 ├── tsconfig.json
-├── package.json
-├── public/
-│   └── logo.svg
+├── vite.config.ts
 └── src/
     ├── main.tsx
     ├── App.tsx
-    ├── assets/
-    ├── types/
-    │   ├── index.ts
-    ├── constants/
-    │   └── index.ts
-    ├── context/
-    │   └── AuthContext.tsx
-    ├── hooks/
-    │   └── useAuth.ts
-    ├── lib/
-    │   └── axios.ts
-    ├── pages/
-    │   ├── Home.tsx
-    │   ├── Login.tsx
-    │   ├── Register.tsx
-    │   ├── Dashboard.tsx
-    │   ├── NotFound.tsx
-    ├── components/
+    ├── index.css                  
+    ├── assets/                    
+    ├── components/                
     │   ├── Header.tsx
     │   ├── Footer.tsx
+    │   ├── Button.tsx
     │   ├── ProtectedRoute.tsx
-    │   └── LoadingSpinner.tsx
-    ├── features/
-    │   ├── users/
-    │   │   ├── Profile.tsx
-    │   ├── events/
-    │   │   ├── EventList.tsx
-    │   │   └── EventForm.tsx
-    │   ├── guests/
-    │   │   ├── GuestList.tsx
-    │   │   └── GuestForm.tsx
-    │   ├── tasks/
-    │   │   ├── TaskList.tsx
-    │   │   └── TaskForm.tsx
-    │   └── settings/
-    │       ├── SettingsForm.tsx
-    │       └── SettingItem.tsx
-    ├── routes/
-    │   └── AppRoutes.tsx
-    └── styles/
-        └── index.css
+    │   ├── LoadingSpinner.tsx
+    │   └── Calendar.tsx           
+    ├── modals/                    
+    │   ├── EventModal.tsx
+    │   ├── GuestModal.tsx
+    │   ├── TaskModal.tsx
+    │   └── SettingsModal.tsx
+    ├── pages/                     
+    │   ├── HomePage.tsx
+    │   ├── LoginPage.tsx
+    │   ├── RegisterPage.tsx
+    │   ├── DashboardPage.tsx
+    │   ├── EventPage.tsx
+    │   ├── GuestPage.tsx
+    │   ├── TaskPage.tsx
+    │   └── SettingsPage.tsx
+    ├── context/                   
+    │   ├── AuthContext.tsx
+    │   └── EventContext.tsx
+    ├── hooks/                     
+    │   └── useAuth.ts
+    ├── utils/                     
+    │   └── api.ts
+    └── types/                     
+        ├── User.ts
+        ├── Event.ts
+        ├── Guest.ts
+        ├── Task.ts
+        └── Settings.ts
+
 ```
