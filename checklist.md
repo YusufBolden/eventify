@@ -19,7 +19,7 @@
 - [✅] Create Setting model, route and controller
 
 ## 🖥️ Frontend - UI & Logic (Mobile-First)
-- [ ] Scaffold Vite + Tailwind CSS app (mobile-first config)
+- [✅] Scaffold Vite + Tailwind CSS app (mobile-first config)
 - [ ] Create login/register pages (mobile-optimized)
 - [ ] Implement auth context + JWT storage
 - [ ] Create event dashboard page
