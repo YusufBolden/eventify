@@ -1,13 +1,20 @@
+import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import './index.css'
+import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#E9D5FF]">
+    <div className="min-h-screen flex flex-col bg-gray-100">
       <Header />
-      <main className="flex-grow flex items-center justify-center text-center">
-        <h1 className="text-4xl font-bold text-[#6366F1]">Eventify Frontend Running ✅</h1>
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Routes>
       </main>
       <Footer />
     </div>
