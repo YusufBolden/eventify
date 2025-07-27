@@ -2,7 +2,7 @@
 
 ## 📦 Project Setup
 - [✅] Submit proposal and get approval
-- [ ] Create full project structure (backend/frontend)
+- [✅] Create full project structure (backend/frontend)
 - [✅] Initialize Git repo and push to GitHub
 - [✅] Add .env.example files and .gitignore
 
@@ -15,6 +15,8 @@
 - [✅] Create Guest model
 - [✅] Event CRUD routes
 - [✅] Guest RSVP routes
+- [✅] Create Admin model, route, controller
+- [✅] Create Setting model, route and controller
 
 ## 🖥️ Frontend - UI & Logic (Mobile-First)
 - [ ] Scaffold Vite + Tailwind CSS app (mobile-first config)
@@ -38,7 +40,6 @@
 - [ ] Deploy backend to Render
 - [ ] Deploy frontend to Render
 - [ ] Connect backend + frontend via env vars
-- [ ] Create demo video (optional)
 - [ ] Final GitHub push with README + URLs
 
 ## 📄 Submission
