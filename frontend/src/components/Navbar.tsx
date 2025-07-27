@@ -1,0 +1,53 @@
+import { Link, useLocation } from 'react-router-dom'
+
+const Navbar = () => {
+  const location = useLocation()
+
+  const isActive = (path: string) => location.pathname === path
+
+  return (
+    <nav className="bg-indigo-600 shadow-md">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <Link to="/" className="text-white text-xl font-bold">
+          Eventify
+        </Link>
+        <div className="space-x-4">
+          <Link
+            to="/"
+            className={`py-2 px-4 font-semibold rounded ${
+              isActive('/') ? 'bg-white text-indigo-600' : 'text-white hover:bg-indigo-500'
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            to="/dashboard"
+            className={`py-2 px-4 font-semibold rounded ${
+              isActive('/dashboard') ? 'bg-white text-indigo-600' : 'text-white hover:bg-indigo-500'
+            }`}
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/login"
+            className={`py-2 px-4 font-semibold rounded ${
+              isActive('/login') ? 'bg-white text-indigo-600' : 'text-white hover:bg-indigo-500'
+            }`}
+          >
+            Login
+          </Link>
+          <Link
+            to="/register"
+            className={`py-2 px-4 font-semibold rounded ${
+              isActive('/register') ? 'bg-white text-indigo-600' : 'text-white hover:bg-indigo-500'
+            }`}
+          >
+            Register
+          </Link>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+export default Navbar
