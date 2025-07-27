@@ -1,13 +1,32 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const RegisterPage = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Handle registration logic
+
+    try {
+      const { data } = await axios.post('/api/users/register', {
+        name,
+        email,
+        password,
+      })
+
+      localStorage.setItem('token', data.token)
+      navigate('/dashboard')
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        alert(err.response.data.message || 'Registration failed. Try again.')
+      } else {
+        alert('An unexpected error occurred.')
+      }
+    }
   }
 
   return (
@@ -23,6 +42,7 @@ const RegisterPage = () => {
             className="w-full px-4 py-2 border rounded-md"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
           <input
             type="email"
@@ -30,6 +50,7 @@ const RegisterPage = () => {
             className="w-full px-4 py-2 border rounded-md"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <input
             type="password"
@@ -37,6 +58,7 @@ const RegisterPage = () => {
             className="w-full px-4 py-2 border rounded-md"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
           <button
             type="submit"
