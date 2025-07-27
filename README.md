@@ -36,3 +36,99 @@ Built using a mobile-first and accessibility-first approach, Eventify ensures th
 ### ☁️ Deployment
 ![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?style=flat-square&logo=render&logoColor=black)
 ![MongoDB Atlas](https://img.shields.io/badge/DB_Host-MongoDB_Atlas-11B048?style=flat-square&logo=mongodb&logoColor=white)
+
+### Backend file structure
+
+```
+backend/
+├── src/
+│   ├── config/
+│   │   └── db.js
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── eventController.js
+│   │   ├── guestController.js
+│   │   ├── settingsController.js
+│   │   ├── taskController.js
+│   │   └── userController.js
+│   ├── middleware/
+│   │   ├── adminMiddleware.js
+│   │   ├── authMiddleware.js
+│   │   ├── errorHandler.js
+│   │   └── ownershipMiddleware.js
+│   ├── models/
+│   │   ├── Event.js
+│   │   ├── Guest.js
+│   │   ├── Settings.js
+│   │   ├── Task.js
+│   │   └── User.js
+│   ├── routes/
+│   │   ├── authRoutes.js
+│   │   ├── eventRoutes.js
+│   │   ├── guestRoutes.js
+│   │   ├── settingsRoutes.js
+│   │   ├── taskRoutes.js
+│   │   └── userRoutes.js
+│   ├── utils/
+│   │   └── generateToken.js
+│   └── server.js
+├── .env.example
+├── package.json
+├── package-lock.json
+└── README.md
+```
+
+### Frontend file structure
+```
+frontend/
+├── index.html
+├── vite.config.ts
+├── tsconfig.json
+├── package.json
+├── public/
+│   └── logo.svg
+└── src/
+    ├── main.tsx
+    ├── App.tsx
+    ├── assets/
+    ├── types/
+    │   ├── index.ts
+    ├── constants/
+    │   └── index.ts
+    ├── context/
+    │   └── AuthContext.tsx
+    ├── hooks/
+    │   └── useAuth.ts
+    ├── lib/
+    │   └── axios.ts
+    ├── pages/
+    │   ├── Home.tsx
+    │   ├── Login.tsx
+    │   ├── Register.tsx
+    │   ├── Dashboard.tsx
+    │   ├── NotFound.tsx
+    ├── components/
+    │   ├── Header.tsx
+    │   ├── Footer.tsx
+    │   ├── ProtectedRoute.tsx
+    │   └── LoadingSpinner.tsx
+    ├── features/
+    │   ├── users/
+    │   │   ├── Profile.tsx
+    │   ├── events/
+    │   │   ├── EventList.tsx
+    │   │   └── EventForm.tsx
+    │   ├── guests/
+    │   │   ├── GuestList.tsx
+    │   │   └── GuestForm.tsx
+    │   ├── tasks/
+    │   │   ├── TaskList.tsx
+    │   │   └── TaskForm.tsx
+    │   └── settings/
+    │       ├── SettingsForm.tsx
+    │       └── SettingItem.tsx
+    ├── routes/
+    │   └── AppRoutes.tsx
+    └── styles/
+        └── index.css
+```
