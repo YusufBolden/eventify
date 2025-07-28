@@ -1,20 +1,43 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import api from '../api/axios'
+import { AxiosError } from 'axios'
 
 const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Handle login logic
+    setError('')
+
+    try {
+      const response = await api.post('/users/login', { email, password })
+      localStorage.setItem('userInfo', JSON.stringify(response.data))
+      navigate('/dashboard')
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message: string }>
+      if (axiosError.response?.data?.message) {
+        setError(axiosError.response.data.message)
+      } else {
+        setError('Login failed. Please try again.')
+      }
+    }
   }
 
   return (
-    <div className="flex justify-center py-12">
+    <div className="bg-[#E9D5FF] flex justify-center py-12">
       <div className="bg-white shadow-md rounded-md p-8 w-full max-w-md">
         <h2 className="text-2xl font-bold text-indigo-600 mb-6 text-center">
           Login to Eventify
         </h2>
+
+        {error && (
+          <p className="text-red-600 text-sm mb-4 text-center">{error}</p>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
