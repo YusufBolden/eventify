@@ -25,6 +25,7 @@
 - [✅] Create event dashboard page
 - [✅] Fetches events on dashboard page
 - [✅] Create single event view (guests, RSVP tracking)
+- [✅] Create Event CRUD functionality
 - [ ] Create RSVP form with accessible fields
 - [ ] Test navigation on mobile view
 
