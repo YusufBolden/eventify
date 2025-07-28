@@ -1,12 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import api from '../api/axios'
 import type { EventModalProps } from '../types/Event'
 
-const EventModal = ({ isOpen, onClose, onEventCreated }: EventModalProps) => {
+const EventModal = ({
+  isOpen,
+  onClose,
+  onEventCreated,
+  onEventUpdated,
+  editMode = false,
+  existingEvent = null,
+}: EventModalProps) => {
   const [title, setTitle] = useState('')
   const [date, setDate] = useState('')
   const [description, setDescription] = useState('')
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (editMode && existingEvent) {
+      setTitle(existingEvent.title || '')
+      setDate(existingEvent.date?.split('T')[0] || '')
+      setDescription(existingEvent.description || '')
+    } else {
+      setTitle('')
+      setDate('')
+      setDescription('')
+    }
+  }, [editMode, existingEvent])
 
   if (!isOpen) return null
 
@@ -15,33 +34,34 @@ const EventModal = ({ isOpen, onClose, onEventCreated }: EventModalProps) => {
     setError('')
 
     try {
-      const userInfo = localStorage.getItem('userInfo')
-      const token = userInfo ? JSON.parse(userInfo).token : ''
+      if (editMode && existingEvent) {
+        const res = await api.put(`/events/${existingEvent._id}`, {
+          title,
+          date,
+          description,
+        })
+        onEventUpdated(res.data)
+      } else {
+        const res = await api.post('/events', {
+          title,
+          date,
+          description,
+        })
+        onEventCreated(res.data)
+      }
 
-      const res = await api.post(
-        '/events',
-        { title, date, description },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-
-      onEventCreated(res.data)
       onClose()
-      setTitle('')
-      setDate('')
-      setDescription('')
     } catch {
-      setError('Failed to create event. Please try again.')
+      setError('Failed to save event. Please try again.')
     }
   }
 
   return (
-    <div className="fixed inset-0 bg-[#E9D5FF] bg-opacity-40 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-indigo-600 mb-4 text-center">Create Event</h2>
+        <h2 className="text-2xl font-bold text-indigo-600 mb-4 text-center">
+          {editMode ? 'Edit Event' : 'Create Event'}
+        </h2>
         {error && <p className="text-red-600 text-sm mb-4 text-center">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -78,7 +98,7 @@ const EventModal = ({ isOpen, onClose, onEventCreated }: EventModalProps) => {
               type="submit"
               className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-md font-semibold"
             >
-              Create
+              {editMode ? 'Update' : 'Create'}
             </button>
           </div>
         </form>

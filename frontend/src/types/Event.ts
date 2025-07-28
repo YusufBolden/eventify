@@ -8,9 +8,11 @@ export interface Event {
   user?: string
 }
 
-
 export interface EventModalProps {
   isOpen: boolean
   onClose: () => void
   onEventCreated: (event: Event) => void
+  onEventUpdated: (event: Event) => void
+  editMode?: boolean
+  existingEvent?: Event | null
 }
