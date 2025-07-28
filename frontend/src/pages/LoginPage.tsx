@@ -17,6 +17,7 @@ const LoginPage = () => {
       const response = await api.post('/users/login', { email, password })
       localStorage.setItem('userInfo', JSON.stringify(response.data))
       navigate('/dashboard')
+      window.location.reload()
     } catch (err) {
       const axiosError = err as AxiosError<{ message: string }>
       if (axiosError.response?.data?.message) {

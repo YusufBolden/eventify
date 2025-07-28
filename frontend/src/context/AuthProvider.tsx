@@ -1,11 +1,7 @@
-import { useState, useEffect, type ReactNode } from 'react'
+import { useState, useEffect } from 'react'
 import { AuthContext } from './AuthContext'
 import type { UserInfo } from '../types/User'
-import type { AuthContextType } from '../types/Auth'
-
-type AuthProviderProps = {
-  children: ReactNode
-}
+import type { AuthContextType, AuthProviderProps } from '../types/Auth'
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserInfo | null>(null)
@@ -17,14 +13,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }, [])
 
+  useEffect(() => {
+    const syncLogout = () => {
+      const storedUser = localStorage.getItem('userInfo')
+      setUser(storedUser ? JSON.parse(storedUser) : null)
+    }
+
+    window.addEventListener('storage', syncLogout)
+    return () => window.removeEventListener('storage', syncLogout)
+  }, [])
+
   const login = (userData: UserInfo) => {
-    setUser(userData)
     localStorage.setItem('userInfo', JSON.stringify(userData))
+    setUser(userData)
   }
 
   const logout = () => {
-    setUser(null)
     localStorage.removeItem('userInfo')
+    setUser(null)
   }
 
   const value: AuthContextType = { user, login, logout }

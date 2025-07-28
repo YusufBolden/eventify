@@ -6,9 +6,7 @@ const Navbar = () => {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
 
-  const isActive = (path: string) => {
-    return location.pathname === path
-  }
+  const isActive = (path: string) => location.pathname === path
 
   const handleLogout = () => {
     logout()
@@ -42,14 +40,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          {user ? (
-            <button
-              onClick={handleLogout}
-              className="py-2 px-4 font-semibold text-white bg-red-500 rounded hover:bg-red-600 transition"
-            >
-              Logout
-            </button>
-          ) : (
+          {!user && (
             <>
               <Link
                 to="/login"
@@ -68,6 +59,15 @@ const Navbar = () => {
                 Register
               </Link>
             </>
+          )}
+
+          {user && (
+            <button
+              onClick={handleLogout}
+              className="py-2 px-4 font-semibold text-white bg-red-500 rounded hover:bg-red-600 transition"
+            >
+              Logout
+            </button>
           )}
         </div>
       </div>
