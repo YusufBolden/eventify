@@ -22,7 +22,8 @@
 - [✅] Scaffold Vite + Tailwind CSS app (mobile-first config)
 - [✅] Create login/register pages (mobile-optimized)
 - [✅] Implement auth context + JWT storage
-- [ ] Create event dashboard page
+- [✅] Create event dashboard page
+- [✅] Fetches events on dashboard page
 - [ ] Create single event view (guests, RSVP tracking)
 - [ ] Create RSVP form with accessible fields
 - [ ] Test navigation on mobile view
