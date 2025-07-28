@@ -16,7 +16,7 @@
 - [✅] Event CRUD routes
 - [✅] Guest RSVP routes
 - [✅] Create Admin model, route, controller
-- [✅] Create Setting model, route and controller
+- [✅] Create Settings model, route and controller
 
 ## 🖥️ Frontend - UI & Logic (Mobile-First)
 - [✅] Scaffold Vite + Tailwind CSS app (mobile-first config)
@@ -24,7 +24,7 @@
 - [✅] Implement auth context + JWT storage
 - [✅] Create event dashboard page
 - [✅] Fetches events on dashboard page
-- [ ] Create single event view (guests, RSVP tracking)
+- [✅] Create single event view (guests, RSVP tracking)
 - [ ] Create RSVP form with accessible fields
 - [ ] Test navigation on mobile view
 
