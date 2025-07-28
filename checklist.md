@@ -21,7 +21,7 @@
 ## 🖥️ Frontend - UI & Logic (Mobile-First)
 - [✅] Scaffold Vite + Tailwind CSS app (mobile-first config)
 - [✅] Create login/register pages (mobile-optimized)
-- [ ] Implement auth context + JWT storage
+- [✅] Implement auth context + JWT storage
 - [ ] Create event dashboard page
 - [ ] Create single event view (guests, RSVP tracking)
 - [ ] Create RSVP form with accessible fields
