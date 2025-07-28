@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 import EventModal from '../modals/EventModal'
-import LoadingSpinner from '../components/LoadingSpinner'
 import type { Event } from '../types/Event'
+import { FaTrash, FaPen } from 'react-icons/fa'
 
 const DashboardPage = () => {
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const [editMode, setEditMode] = useState(false)
+  const [eventToEdit, setEventToEdit] = useState<Event | null>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -29,9 +33,38 @@ const DashboardPage = () => {
     setEvents((prev) => [...prev, newEvent])
   }
 
+  const handleEventUpdated = (updated: Event) => {
+    setEvents((prev) =>
+      prev.map((ev) => (ev._id === updated._id ? updated : ev))
+    )
+  }
+
+  const handleDelete = async (id: string) => {
+    const confirm = window.confirm('Are you sure you want to delete this event?')
+    if (!confirm) return
+    try {
+      await api.delete(`/events/${id}`)
+      setEvents((prev) => prev.filter((ev) => ev._id !== id))
+    } catch {
+      alert('Failed to delete event.')
+    }
+  }
+
+  const openEditModal = (event: Event) => {
+    setEventToEdit(event)
+    setEditMode(true)
+    setShowModal(true)
+  }
+
+  const closeModal = () => {
+    setShowModal(false)
+    setEditMode(false)
+    setEventToEdit(null)
+  }
+
   return (
-    <div className="min-h-screen bg-[#E9D5FF] px-4 py-8 text-[#4338CA] flex flex-col">
-      <div className="max-w-2xl w-full mx-auto">
+    <div className="px-4 py-8 text-[#4338CA]">
+      <div className="max-w-2xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold">My Events</h1>
           <button
@@ -42,16 +75,10 @@ const DashboardPage = () => {
           </button>
         </div>
 
-        {loading && (
-          <div className="flex justify-center">
-            <LoadingSpinner />
-          </div>
-        )}
-
+        {loading && <p className="text-center">Loading...</p>}
         {error && events.length === 0 && (
           <p className="text-red-600 text-center mb-2">{error}</p>
         )}
-
         {!loading && events.length === 0 && (
           <p className="text-center text-gray-700">You have no events yet.</p>
         )}
@@ -60,13 +87,38 @@ const DashboardPage = () => {
           {events.map((event) => (
             <li
               key={event._id}
-              className="bg-white shadow p-4 rounded-xl border border-[#6366F1] cursor-pointer transition hover:shadow-md"
-              onClick={() => window.location.href = `/events/${event._id}`}
+              onClick={() => navigate(`/events/${event._id}`)}
+              className="bg-white shadow p-4 rounded-xl border border-[#6366F1] relative cursor-pointer"
             >
+              <div className="absolute top-3 right-3 flex gap-2">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    openEditModal(event)
+                  }}
+                  className="text-indigo-500 hover:text-indigo-700"
+                  title="Edit"
+                >
+                  <FaPen />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    handleDelete(event._id)
+                  }}
+                  className="text-red-500 hover:text-red-700"
+                  title="Delete"
+                >
+                  <FaTrash />
+                </button>
+              </div>
               <h2 className="text-xl font-semibold">{event.title}</h2>
               {event.description && (
-                <p className="text-sm text-gray-700">{event.description}</p>
-              )}
+  <p className="text-sm text-gray-700 overflow-hidden max-h-20 text-ellipsis">
+    {event.description}
+  </p>
+)}
+
               <p className="text-sm text-gray-500 mt-2">
                 {new Date(event.date).toLocaleDateString()}
               </p>
@@ -77,8 +129,11 @@ const DashboardPage = () => {
 
       <EventModal
         isOpen={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={closeModal}
         onEventCreated={handleEventCreated}
+        editMode={editMode}
+        existingEvent={eventToEdit}
+        onEventUpdated={handleEventUpdated}
       />
     </div>
   )
