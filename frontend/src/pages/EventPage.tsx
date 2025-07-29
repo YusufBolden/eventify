@@ -1,20 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import api from '../api/axios'
 import type { Event } from '../types/Event'
+import { FaPen, FaTrash, FaArrowLeft } from 'react-icons/fa'
+import { toast } from 'react-hot-toast'
+import EventModal from '../modals/EventModal'
 
 const EventPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [event, setEvent] = useState<Event | null>(null)
   const [error, setError] = useState('')
+  const [showTopBackButton, setShowTopBackButton] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const contentRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-  document.body.classList.add('overflow-hidden')
-  return () => {
-    document.body.classList.remove('overflow-hidden')
-  }
-}, [])
+    document.body.classList.add('overflow-hidden')
+    return () => {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [])
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -28,6 +34,42 @@ const EventPage = () => {
 
     fetchEvent()
   }, [id])
+
+  useEffect(() => {
+    const checkScrollability = () => {
+      if (contentRef.current) {
+        const el = contentRef.current
+        setShowTopBackButton(el.scrollHeight > el.clientHeight + 60)
+      }
+    }
+
+    setTimeout(checkScrollability, 100)
+  }, [event])
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm('Are you sure you want to delete this event?')
+    if (!confirmDelete) return
+
+    try {
+      await api.delete(`/events/${id}`)
+      toast.success('Event deleted successfully')
+      navigate('/dashboard')
+    } catch {
+      toast.error('Failed to delete event')
+    }
+  }
+
+  const handleEventUpdated = (updated: Event) => {
+    setEvent(updated)
+  }
+
+  const openEditModal = () => {
+    setShowModal(true)
+  }
+
+  const closeModal = () => {
+    setShowModal(false)
+  }
 
   return (
     <div className="min-h-screen overflow-hidden bg-[#E9D5FF] px-4 py-12 text-center text-[#4338CA]">
@@ -51,10 +93,36 @@ const EventPage = () => {
             </div>
           </>
         ) : event ? (
-          <>
+          <div className="bg-white shadow-lg rounded-xl p-6 text-left relative max-h-[80vh] overflow-y-auto" ref={contentRef}>
+            <div className="absolute top-4 right-4 flex gap-2">
+              {showTopBackButton && (
+                <button
+                  onClick={() => navigate('/dashboard')}
+                  className="flex items-center gap-1 text-indigo-600 hover:text-indigo-800 font-semibold"
+                  title="Back"
+                >
+                  <FaArrowLeft />
+                  <span>Back</span>
+                </button>
+              )}
+              <button
+                onClick={openEditModal}
+                className="text-indigo-600 hover:text-indigo-800"
+                title="Edit"
+              >
+                <FaPen />
+              </button>
+              <button
+                onClick={handleDelete}
+                className="text-red-500 hover:text-red-700"
+                title="Delete"
+              >
+                <FaTrash />
+              </button>
+            </div>
             <h1 className="text-4xl font-bold mb-4">{event.title}</h1>
-            <p className="text-lg text-gray-700">{event.description}</p>
-            <p className="text-sm text-gray-500 mt-2">
+            <p className="text-lg text-gray-700 whitespace-pre-line">{event.description}</p>
+            <p className="text-sm text-gray-500 mt-4">
               {new Date(event.date).toLocaleDateString()}
             </p>
             <button
@@ -63,11 +131,21 @@ const EventPage = () => {
             >
               ← Back to Dashboard
             </button>
-          </>
+          </div>
         ) : (
           <p className="text-lg text-gray-600">Loading event...</p>
         )}
       </div>
+
+      {event && (
+<EventModal
+  isOpen={showModal}
+  onClose={closeModal}
+  onEventCreated={() => {}} // required but unused in edit mode
+  onEventUpdated={handleEventUpdated}
+  editMode={true}
+  existingEvent={event}
+/>      )}
     </div>
   )
 }
