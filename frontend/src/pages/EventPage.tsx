@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import api from '../api/axios'
-import EventModal from '../modals/EventModal'
 import type { Event } from '../types/Event'
-import { FaArrowLeft, FaPen, FaTrash } from 'react-icons/fa'
 
 const EventPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [event, setEvent] = useState<Event | null>(null)
-  const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
-  const [showModal, setShowModal] = useState(false)
+
+  useEffect(() => {
+  document.body.classList.add('overflow-hidden')
+  return () => {
+    document.body.classList.remove('overflow-hidden')
+  }
+}, [])
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -19,83 +22,52 @@ const EventPage = () => {
         const res = await api.get(`/events/${id}`)
         setEvent(res.data)
       } catch {
-        setError('Failed to load event.')
-      } finally {
-        setLoading(false)
+        setError('You must be logged in to view this event.')
       }
     }
 
     fetchEvent()
   }, [id])
 
-  const handleEventUpdated = (updated: Event) => {
-    setEvent(updated)
-    setShowModal(false)
-  }
-
-  const handleDelete = async () => {
-    const confirm = window.confirm('Are you sure you want to delete this event?')
-    if (!confirm) return
-    try {
-      await api.delete(`/events/${id}`)
-      navigate('/dashboard')
-    } catch {
-      alert('Failed to delete event.')
-    }
-  }
-
-  if (loading) {
-    return <p className="text-center mt-8">Loading...</p>
-  }
-
-  if (error || !event) {
-    return <p className="text-center mt-8 text-red-600">{error || 'Event not found.'}</p>
-  }
-
   return (
-    <div className="px-4 py-8 text-[#4338CA] max-w-xl mx-auto">
-      <button
-        onClick={() => navigate('/dashboard')}
-        className="mb-4 flex items-center text-indigo-600 hover:underline font-semibold"
-      >
-        <FaArrowLeft className="mr-2" /> Back to Dashboard
-      </button>
-
-      <div className="bg-white shadow p-6 rounded-xl border border-[#6366F1] relative">
-        <div className="absolute top-3 right-3 flex gap-3">
-          <button
-            onClick={() => setShowModal(true)}
-            className="text-indigo-500 hover:text-indigo-700"
-            title="Edit"
-          >
-            <FaPen />
-          </button>
-          <button
-            onClick={handleDelete}
-            className="text-red-500 hover:text-red-700"
-            title="Delete"
-          >
-            <FaTrash />
-          </button>
-        </div>
-
-        <h2 className="text-2xl font-bold mb-2">{event.title}</h2>
-        {event.description && (
-          <p className="text-gray-700 mb-2">{event.description}</p>
+    <div className="min-h-screen overflow-hidden bg-[#E9D5FF] px-4 py-12 text-center text-[#4338CA]">
+      <div className="max-w-2xl mx-auto">
+        {error ? (
+          <>
+            <h1 className="text-4xl font-bold mb-6">{error}</h1>
+            <div className="space-x-4">
+              <button
+                onClick={() => navigate('/login')}
+                className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition"
+              >
+                Login
+              </button>
+              <button
+                onClick={() => navigate('/register')}
+                className="inline-block bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded transition"
+              >
+                Register
+              </button>
+            </div>
+          </>
+        ) : event ? (
+          <>
+            <h1 className="text-4xl font-bold mb-4">{event.title}</h1>
+            <p className="text-lg text-gray-700">{event.description}</p>
+            <p className="text-sm text-gray-500 mt-2">
+              {new Date(event.date).toLocaleDateString()}
+            </p>
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="mt-8 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded transition"
+            >
+              ← Back to Dashboard
+            </button>
+          </>
+        ) : (
+          <p className="text-lg text-gray-600">Loading event...</p>
         )}
-        <p className="text-gray-500">
-          {new Date(event.date).toLocaleDateString()}
-        </p>
       </div>
-
-      <EventModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onEventCreated={() => {}}
-        onEventUpdated={handleEventUpdated}
-        editMode={true}
-        existingEvent={event}
-      />
     </div>
   )
 }
