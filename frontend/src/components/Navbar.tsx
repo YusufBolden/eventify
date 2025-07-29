@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
+import AdminLoginButton from './AdminLoginButton'
 
 const Navbar = () => {
   const location = useLocation()
@@ -58,6 +59,7 @@ const Navbar = () => {
               >
                 Register
               </Link>
+              <AdminLoginButton />
             </>
           )}
 
