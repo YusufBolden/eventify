@@ -27,6 +27,7 @@
 - [✅] Create single event view (guests, RSVP tracking)
 - [✅] Create Event CRUD functionality
 - [✅] Add pagination for Events list
+- [✅] Create Admin page and category views
 - [ ] Create RSVP form with accessible fields (stretch)
 - [ ] Test navigation on mobile view
 
