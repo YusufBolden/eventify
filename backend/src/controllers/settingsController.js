@@ -15,6 +15,16 @@ export const getSettingByKey = async (req, res) => {
   }
 }
 
+export const getSettingById = async (req, res) => {
+  const setting = await Settings.findById(req.params.id)
+  if (setting) {
+    res.json(setting)
+  } else {
+    res.status(404)
+    throw new Error('Setting not found')
+  }
+}
+
 export const upsertSetting = async (req, res) => {
   const { key, value } = req.body
 

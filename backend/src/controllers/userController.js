@@ -1,12 +1,10 @@
 import User from '../models/User.js'
 import jwt from 'jsonwebtoken'
 
-// Token generator
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' })
 }
 
-// Register new user (supports admin flag)
 export const registerUser = async (req, res) => {
   const { name, email, password, isAdmin } = req.body
   const normalizedEmail = email.toLowerCase().trim()
@@ -41,7 +39,6 @@ export const registerUser = async (req, res) => {
   }
 }
 
-// Login user
 export const loginUser = async (req, res) => {
   const { email, password } = req.body
   const normalizedEmail = email.toLowerCase().trim()
@@ -65,7 +62,6 @@ export const loginUser = async (req, res) => {
   }
 }
 
-// Get user profile
 export const getUserProfile = (req, res) => {
   res.json({
     message: `Get user profile for ${req.user.name}`,
@@ -73,9 +69,23 @@ export const getUserProfile = (req, res) => {
   })
 }
 
-// Update user profile
 export const updateUserProfile = (req, res) => {
   res.json({
     message: `Update user profile for ${req.user.name}`,
   })
+}
+
+export const getAllUsers = async (req, res) => {
+  const users = await User.find({}).select('-password')
+  res.json(users)
+}
+
+export const getUserById = async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password')
+  if (user) {
+    res.json(user)
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
 }
