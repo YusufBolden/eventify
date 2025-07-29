@@ -13,6 +13,10 @@ const DashboardPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [eventToEdit, setEventToEdit] = useState<Event | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [inputPage, setInputPage] = useState("1");
+  const eventsPerPage = 3;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,6 +75,41 @@ const DashboardPage = () => {
     setEventToEdit(null);
   };
 
+  // Pagination logic
+  const totalPages = Math.ceil(events.length / eventsPerPage);
+  const indexOfLast = currentPage * eventsPerPage;
+  const indexOfFirst = indexOfLast - eventsPerPage;
+  const currentEvents = events.slice(indexOfFirst, indexOfLast);
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+      setInputPage(String(currentPage + 1));
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+      setInputPage(String(currentPage - 1));
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputPage(e.target.value);
+  };
+
+  const handlePageJump = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const page = parseInt(inputPage);
+    if (!isNaN(page) && page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    } else {
+      toast.error(`Page must be between 1 and ${totalPages}`);
+      setInputPage(String(currentPage));
+    }
+  };
+
   return (
     <div className="px-4 py-8 text-[#4338CA]">
       <div className="max-w-2xl mx-auto">
@@ -93,7 +132,7 @@ const DashboardPage = () => {
         )}
 
         <ul className="space-y-4">
-          {events.map((event) => (
+          {currentEvents.map((event) => (
             <li
               key={event._id}
               onClick={() => navigate(`/events/${event._id}`)}
@@ -127,13 +166,53 @@ const DashboardPage = () => {
                   {event.description}
                 </p>
               )}
-
               <p className="text-sm text-gray-500 mt-2">
                 {new Date(event.date).toLocaleDateString()}
               </p>
             </li>
           ))}
         </ul>
+
+        {events.length > eventsPerPage && (
+          <div className="flex justify-center mt-8 flex-wrap gap-4 text-lg font-semibold">
+            <button
+              onClick={handlePrev}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 rounded border ${
+                currentPage === 1
+                  ? "bg-gray-300 text-gray-500 border-gray-300 cursor-not-allowed"
+                  : "bg-white text-indigo-600 border-indigo-600 hover:bg-indigo-50"
+              }`}
+            >
+              ← Prev
+            </button>
+
+            <form onSubmit={handlePageJump} className="flex items-center gap-2">
+              <span>Page</span>
+              <input
+                type="number"
+                value={inputPage}
+                onChange={handleInputChange}
+                className="w-16 text-center border border-gray-400 rounded px-2 py-1"
+                min={1}
+                max={totalPages}
+              />
+              <span>of {totalPages}</span>
+            </form>
+
+            <button
+              onClick={handleNext}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 rounded ${
+                currentPage === totalPages
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-emerald-500 hover:bg-emerald-600 text-white"
+              }`}
+            >
+              Next →
+            </button>
+          </div>
+        )}
       </div>
 
       <EventModal
