@@ -63,10 +63,6 @@ const EventPage = () => {
     setEvent(updated)
   }
 
-  const openEditModal = () => {
-    setShowModal(true)
-  }
-
   const closeModal = () => {
     setShowModal(false)
   }
@@ -106,7 +102,7 @@ const EventPage = () => {
                 </button>
               )}
               <button
-                onClick={openEditModal}
+                onClick={() => setShowModal(true)}
                 className="text-indigo-600 hover:text-indigo-800"
                 title="Edit"
               >
@@ -138,14 +134,15 @@ const EventPage = () => {
       </div>
 
       {event && (
-<EventModal
-  isOpen={showModal}
-  onClose={closeModal}
-  onEventCreated={() => {}} // required but unused in edit mode
-  onEventUpdated={handleEventUpdated}
-  editMode={true}
-  existingEvent={event}
-/>      )}
+        <EventModal
+          isOpen={showModal}
+          onClose={closeModal}
+          onEventCreated={() => {}}
+          onEventUpdated={handleEventUpdated}
+          editMode={true}
+          existingEvent={event}
+        />
+      )}
     </div>
   )
 }
