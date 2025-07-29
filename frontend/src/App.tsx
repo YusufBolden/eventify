@@ -6,10 +6,13 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
 import EventPage from './pages/EventPage'
+import Toast from './components/Toast'
+
 
 function App() {
   return (
     <div className="min-h-screen flex flex-col">
+      <Toast />
       <Navbar />
       <main className="flex-grow bg-[#E9D5FF]">
         <Routes>

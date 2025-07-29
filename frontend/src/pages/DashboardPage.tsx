@@ -4,6 +4,8 @@ import api from '../api/axios'
 import EventModal from '../modals/EventModal'
 import type { Event } from '../types/Event'
 import { FaTrash, FaPen } from 'react-icons/fa'
+import { toast } from 'react-hot-toast'
+
 
 const DashboardPage = () => {
   const [events, setEvents] = useState<Event[]>([])
@@ -39,16 +41,18 @@ const DashboardPage = () => {
     )
   }
 
-  const handleDelete = async (id: string) => {
-    const confirm = window.confirm('Are you sure you want to delete this event?')
-    if (!confirm) return
-    try {
-      await api.delete(`/events/${id}`)
-      setEvents((prev) => prev.filter((ev) => ev._id !== id))
-    } catch {
-      alert('Failed to delete event.')
-    }
+const handleDelete = async (id: string) => {
+  const confirmDelete = window.confirm('Are you sure you want to delete this event?')
+  if (!confirmDelete) return
+
+  try {
+    await api.delete(`/events/${id}`)
+    setEvents((prev) => prev.filter((ev) => ev._id !== id))
+    toast.success('Event deleted successfully')
+  } catch {
+    toast.error('Failed to delete event')
   }
+}
 
   const openEditModal = (event: Event) => {
     setEventToEdit(event)

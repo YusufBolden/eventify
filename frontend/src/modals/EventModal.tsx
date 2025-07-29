@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import api from '../api/axios'
 import type { EventModalProps } from '../types/Event'
+import { toast } from 'react-hot-toast'
+
 
 const EventModal = ({
   isOpen,
@@ -29,32 +31,34 @@ const EventModal = ({
 
   if (!isOpen) return null
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  setError('')
 
-    try {
-      if (editMode && existingEvent) {
-        const res = await api.put(`/events/${existingEvent._id}`, {
-          title,
-          date,
-          description,
-        })
-        onEventUpdated(res.data)
-      } else {
-        const res = await api.post('/events', {
-          title,
-          date,
-          description,
-        })
-        onEventCreated(res.data)
-      }
-
-      onClose()
-    } catch {
-      setError('Failed to save event. Please try again.')
+  try {
+    if (editMode && existingEvent) {
+      const res = await api.put(`/events/${existingEvent._id}`, {
+        title,
+        date,
+        description,
+      })
+      onEventUpdated(res.data)
+      toast.success('Event updated successfully')
+    } else {
+      const res = await api.post('/events', {
+        title,
+        date,
+        description,
+      })
+      onEventCreated(res.data)
+      toast.success('Event created successfully')
     }
+
+    onClose()
+  } catch {
+    toast.error('Failed to save event. Please try again.')
   }
+}
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
