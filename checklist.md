@@ -15,7 +15,7 @@
 - [✅] Create Guest model
 - [✅] Event CRUD routes
 - [✅] Guest RSVP routes
-- [ ] Create Admin model, route, controller
+- [✅] Create Admin model, route, controller
 - [✅] Create Settings model, route and controller
 
 ## 🖥️ Frontend - UI & Logic (Mobile-First)
