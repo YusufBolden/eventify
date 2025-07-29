@@ -15,7 +15,7 @@
 - [✅] Create Guest model
 - [✅] Event CRUD routes
 - [✅] Guest RSVP routes
-- [✅] Create Admin model, route, controller
+- [ ] Create Admin model, route, controller
 - [✅] Create Settings model, route and controller
 
 ## 🖥️ Frontend - UI & Logic (Mobile-First)
@@ -26,8 +26,8 @@
 - [✅] Fetches events on dashboard page
 - [✅] Create single event view (guests, RSVP tracking)
 - [✅] Create Event CRUD functionality
-- [ ] Add pagination for Events list
-- [ ] Create RSVP form with accessible fields
+- [✅] Add pagination for Events list
+- [ ] Create RSVP form with accessible fields (stretch)
 - [ ] Test navigation on mobile view
 
 ## 🎨 Styling, UX & Accessibility
