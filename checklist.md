@@ -26,17 +26,18 @@
 - [✅] Fetches events on dashboard page
 - [✅] Create single event view (guests, RSVP tracking)
 - [✅] Create Event CRUD functionality
+- [ ] Add pagination for Events list
 - [ ] Create RSVP form with accessible fields
 - [ ] Test navigation on mobile view
 
 ## 🎨 Styling, UX & Accessibility
-- [ ] Responsive layout (mobile-first → desktop)
-- [ ] Clear focus states (`focus:outline`, `focus:ring`)
-- [ ] Use semantic HTML (form, nav, button, etc.)
+- [✅] Responsive layout (mobile-first → desktop)
+- [✅] Clear focus states (`focus:outline`, `focus:ring`)
+- [✅] Use semantic HTML (form, nav, button, etc.)
 - [ ] Add `aria-label`, `aria-describedby`, `role`, etc. where needed
 - [ ] Ensure keyboard-only navigation works
 - [ ] Pass basic Lighthouse accessibility audit
-- [ ] Use WCAG-compliant color contrast via Tailwind
+- [✅] Use WCAG-compliant color contrast via Tailwind
 
 ## 🚀 Deployment & Delivery
 - [ ] Deploy backend to Render
