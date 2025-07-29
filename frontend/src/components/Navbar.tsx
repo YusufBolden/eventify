@@ -1,6 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/useAuth'
-import AdminLoginButton from './AdminLoginButton'
 
 const Navbar = () => {
   const location = useLocation()
@@ -32,12 +31,14 @@ const Navbar = () => {
 
           {user && (
             <Link
-              to="/dashboard"
+              to={user.isAdmin ? '/admin' : '/dashboard'}
               className={`py-2 px-4 font-semibold rounded ${
-                isActive('/dashboard') ? 'bg-white text-indigo-600' : 'text-white hover:bg-indigo-500'
+                isActive('/dashboard') || isActive('/admin')
+                  ? 'bg-white text-indigo-600'
+                  : 'text-white hover:bg-indigo-500'
               }`}
             >
-              Dashboard
+              {user.isAdmin ? 'Admin' : 'Dashboard'}
             </Link>
           )}
 
@@ -49,7 +50,15 @@ const Navbar = () => {
                   isActive('/login') ? 'bg-white text-indigo-600' : 'text-white hover:bg-indigo-500'
                 }`}
               >
-                Login
+                User Login
+              </Link>
+              <Link
+                to="/admin/login"
+                className={`py-2 px-4 font-semibold rounded ${
+                  isActive('/admin/login') ? 'bg-white text-indigo-600' : 'text-white hover:bg-indigo-500'
+                }`}
+              >
+                Admin Login
               </Link>
               <Link
                 to="/register"
@@ -59,7 +68,6 @@ const Navbar = () => {
               >
                 Register
               </Link>
-              <AdminLoginButton />
             </>
           )}
 
