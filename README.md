@@ -4,6 +4,10 @@ Eventify is a modern, full-stack event planning app designed for individuals and
 
 Built using a mobile-first and accessibility-first approach, Eventify ensures that all users, regardless of device or ability, can plan and participate in events with ease.
 
+## 🚢 Live Deployment
+[View Backend on Render](https://eventify-g0fv.onrender.com)
+
+
 ## 🛠️ Tech Stack
 
 ### 🚀 Core Stack
@@ -132,3 +136,13 @@ frontend/
     └── styles/
         └── index.css
 ```
+
+## 🧑🏿‍💻 Author
+
+Created by [Yusuf Bolden](github.com/YusufBolden). Feedback and collaboration welcome!
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
