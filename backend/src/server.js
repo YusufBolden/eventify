@@ -26,6 +26,9 @@ app.use(
   })
 )
 
+app.get('/', (req, res) => {
+  res.json('Welcome to Eventify')
+})
 
 app.use('/api/users', userRoutes)
 app.use('/api/events', eventRoutes)
@@ -35,10 +38,6 @@ app.use('/api/settings', settingsRoutes)
 
 app.use(notFound)
 app.use(errorHandler)
-
-app.get('/', (req, res) => {
-  res.json('Welcome to Eventify')
-})
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
