@@ -36,6 +36,10 @@ app.use('/api/settings', settingsRoutes)
 app.use(notFound)
 app.use(errorHandler)
 
+app.get('/', (req, res) => {
+  res.json('Welcome to Eventify')
+})
+
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
